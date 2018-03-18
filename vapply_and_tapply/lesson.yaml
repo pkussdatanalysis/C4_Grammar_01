@@ -1,0 +1,129 @@
+- Class: meta
+  Course: Grammar
+  Lesson: vapply_and_tapply
+  Author: mzl
+  Type: Standard
+  Organization: pkuss
+  Version: 2.4.3
+  
+- Class: text
+  Output: 在上一课中，您了解了R的*apply函数族两个最基本的成员:lapply（）和sapply（）。
+    两者都将列表作为输入，将函数应用于列表的每个元素，然后合并并返回结果。lapply（）总是返回一个列表，而sapply（）试图简化结果
+
+- Class: text
+  Output: 在本课中，您将学习如何使用vapply()和tapply()，其中每个在Split-Apply-Combine方法中都有一个非常特定的用途。为了保持一致性，我们将使用“lapply and sapply”课程中使用的相同数据集。
+
+- Class: text
+  Output: 来自UCI机器学习库的Flags数据集包含各个国家及其旗帜的细节。更多信息可以在这里找到：http://archive.ics.uci.edu/ml/datasets/Flags
+
+- Class: text
+  Output: 我将数据存储在一个名为flags的变量中。如果你已经完成了“lapply and sapply”课程，那么你可能希望在使用dim（），head（），str（）和summary（）等函数来重新使用这些数据。提示（>）。你也可以在提示符下输入viewinfo（）来为数据集提供一些文档。让我们开始吧！
+
+- Class: cmd_question
+  Output: 正如你在上一课中看到的，unique（）函数返回传递给它的对象中包含的唯一值的向量。因此，sapply（flags，unique）返回一个列表，其中包含标志数据集中每列的唯一值的一个向量。现在再试一次。
+  CorrectAnswer: sapply(flags, unique)
+  AnswerTests: omnitest(correctExpr='sapply(flags, unique)')
+  Hint: 使用sapply（flags，unique）返回一个列表，其中包含flags数据集中每列的唯一值的向量。
+
+- Class: text
+  Output: 如果忘记了unique（）是如何工作的并错误地认为它返回了传递给它的对象中包含的唯一值的个数值，那该怎么办呢？然后，你可能会错误地期望sapply（flags，unique）返回一个数字向量，因为返回的列表中的每个元素都将包含一个数字，然后sapply（）可以将结果简化为一个向量。
+
+- Class: text
+  Output: 在交互式工作时（在提示时），这不是什么大问题，因为你立即看到了结果，很快就会发现你的错误。但是，当以非交互方式工作（例如编写自己的函数）时，误解可能会被忽略，并在以后导致错误的结果。因此，你可能希望更加小心，这就是vapply（）的用处。
+
+- Class: text
+  Output: 鉴于sapply（）试图“猜测”结果的正确格式，vapply（）允许你明确地指定它。如果结果与您指定的格式不匹配，vapply（）会抛出错误，导致操作停止。这可以防止代码中可能由sapply（）获取意外的返回值所导致的重大问题。
+
+- Class: cmd_question
+  Output: 尝试vapply(flags, unique, numeric(1))，它表示你期望结果的每个元素是一个长度为1的数字向量。因为这不是实际情况，你会得到一个错误。一旦出现错误，请输入ok（）继续下一个问题。
+  CorrectAnswer: ok()
+  AnswerTests: omnitest(correctExpr="ok()")
+  Hint: 输入vapply（flags，unique，numeric（1）），然后输入ok（）继续下一个问题。
+
+- Class: cmd_question
+  Output: 从上一课回想，sapply(flags, class)将返回包含数据集中每列的类的字符向量。现在再试一次，看看结果。
+  CorrectAnswer: sapply(flags, class)
+  AnswerTests: omnitest(correctExpr="sapply(flags, class)")
+  Hint: 输入sapply(flags, class)以获得列类的字符向量。
+
+- Class: cmd_question
+  Output: 如果我们希望明确结果的格式，我们可以使用vapply(flags, class, character(1))。 'character（1）'参数告诉R我们期望类函数在应用于flags数据集的每一列时返回长度为1的字符向量。现在就试试。
+  CorrectAnswer: vapply(flags, class, character(1))
+  AnswerTests: omnitest(correctExpr="vapply(flags, class, character(1))")
+  Hint: 使用vapply(flags, class, character(1))返回列类的字符向量。
+
+- Class: text
+  Output: 注意由于我们的期望是正确的（即character(1)），所以vapply（）的结果与sapply（）的结果是一样的--一个列类的字符向量。
+
+- Class: text
+  Output: 你可能认为vapply（）比sapply（）更“安全”，因为它要求你提前指定输出的格式，而不是让R“猜”你想要的。另外，对于大型数据集，vapply（）可能比sapply（）执行得更快。但是，在交互式地进行数据分析时（在提示时），sapply（）为您节省了一些输入的时间，并且通常会足够好。
+
+- Class: text
+  Output: 作为数据分析师，您经常希望根据某个变量的值将数据分组，然后将一个函数应用于每个组的成员。接下来的函数tapply（）就是这样做的。
+
+- Class: cmd_question
+  Output: 使用?tapply来查看其帮助文档。
+  CorrectAnswer: ?tapply
+  AnswerTests: any_of_exprs('?tapply', 'help(tapply)')
+  Hint: 用tapply查看帮助文件。
+
+- Class: cmd_question
+  Output: 在我们的数据集中的'landmass' 变量取1到6之间的整数值，其中每一个代表世界的不同部分。使用table(flags$landmass)来查看每个组中有多少旗帜/国家。
+  CorrectAnswer: table(flags$landmass)
+  AnswerTests: omnitest(correctExpr="table(flags$landmass)")
+  Hint: 使用table(flags$landmass)来查看每个组中有多少个标记/国家/地区。
+
+- Class: cmd_question
+  Output: 如果一个国家的标志包含有生命的图像（例如鹰，树，人的手），那么我们数据集中的'animate'变量取值1，否则取0。使用table(flags$animate)来查看有多少标志包含一个动画图像。
+  CorrectAnswer: table(flags$animate)
+  AnswerTests: omnitest(correctExpr="table(flags$animate)")
+  Hint: 使用table(flags$animate)来查看有多少标志包含动画图像。
+
+- Class: text
+  Output: 这告诉我们39个标志包含一个有动物的对象（animate = 1），155个不包含（animate = 0）。
+
+- Class: cmd_question
+  Output: 如果你取一串0和1的算术平均值，你得到1的比例。使用tapply(flags$animate, flags$landmass, mean)将mean函数分别应用于六个大陆群中的每一个的animate变量，从而给出在每个大陆群内含有有生命的图像的旗的比例。
+  CorrectAnswer: tapply(flags$animate, flags$landmass, mean)
+  AnswerTests: omnitest(correctExpr="tapply(flags$animate, flags$landmass, mean)")
+  Hint: tapply（flag $ animate，flags $ landmass，mean）会告诉我们在每个陆地群体中包含有生命的图像的旗帜的比例。
+
+- Class: text
+  Output: 第一大陆群（陆地= 1）对应于北美，并且具有最高比例的具有动画形象的标志（0.4194）。
+
+- Class: cmd_question
+  Output: 类似地，使用tapply(flags$population, flags$red, summary)我们可以看到在旗帜上带有或不带有红色的国家的人口数量总结（以百万计）。
+  CorrectAnswer: tapply(flags$population, flags$red, summary)
+  AnswerTests: omnitest(correctExpr="tapply(flags$population, flags$red, summary)")
+  Hint: 您可以看到国旗的颜色为红色的国家的人口概况:tapply(flags$population, flags$red, summary)。
+  
+- Class: mult_question  
+  Output: 国旗上不存在的红色的国家的人口中位数（百万）是多少？
+  AnswerChoices: 9.0; 4.0; 27.6; 3.0; 22.1; 0.0
+  CorrectAnswer: 3.0
+  AnswerTests: omnitest(correctVal= '3.0')
+  Hint: 使用你上一个问题的结果。回想一下，红色= 0意味着国旗上不存在红色。
+
+- Class: cmd_question
+  Output: 最后，使用相同的方法来查看六个大陆每一个的总体值。
+  CorrectAnswer: tapply(flags$population, flags$landmass, summary)
+  AnswerTests: omnitest(correctExpr="tapply(flags$population, flags$landmass, summary)")
+  Hint: 您可以通过以下三个参数调用tapply（）来查看六个地块中的每一个的总体情况：flags$population, flags$landmass, summary
+
+- Class: mult_question  
+  Output: 第四大陆集团（非洲）的最大人口（百万）是多少？
+  AnswerChoices: 56.00; 1010.0; 119.0; 5.00; 157.00
+  CorrectAnswer: 56.00
+  AnswerTests: omnitest(correctVal= '56.00')
+  Hint: 使用你上问题的结果。
+
+- Class: text  
+  Output: 在本课中，您学习了如何使用vapply（）作为sapply（）的更安全的替代方法，这在编写自己的函数时非常有用。您还学习了如何使用tapply（）根据某个变量的值将数据分组，然后将函数应用于每个组。这些功能将派上用场，帮助你成为更好的数据分析师。
+
+- Class: mult_question
+  Output: 确定将这次练习的结果提交吗?
+  CorrectAnswer: NULL
+  AnswerChoices: Yes;No
+  AnswerTests: post_on_demand()
+  Hint: ""  
+

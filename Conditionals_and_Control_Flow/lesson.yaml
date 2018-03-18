@@ -1,0 +1,168 @@
+- Class: meta
+  Course: Grammar_01
+  Lesson: Conditionals_and_Control_Flow
+  Author: mzl
+  Type: Standard
+  Organization: pkuss
+  Version: 2.4.3
+
+- Class: text
+  Output: To be TRUE or not be TRUE, that's the question.。 在本章中，您将学习关系运算符，以了解R对象如何比较与逻辑运算符如何进行逻辑组合。
+    接下来，您将使用这些知识来构建条件语句。
+
+- Class: text
+  Output: 最基本的比较是相等的比较。让我们简要回顾一下它的语法。 看一下以下几个语句，
+    它们的结果全部为TRUE：3 == (2 + 1) 、"intermediate" != "r" 、TRUE != FALSE 、"Rchitect" != "rchitect"。
+    从最后一个表达式注意到R是区分大小写的：“R”不等于“r”。
+  
+- Class: cmd_question
+  Output: 在命令行里编写R代码来查看TRUE是否等于FALSE。
+  CorrectAnswer: TRUE ==FALSE
+  AnswerTests: omnitest(correctExpr='TRUE ==FALSE', correctVal=FALSE)
+  Hint: 使用比较运算符'=='
+  
+- Class: cmd_question
+  Output: 接下来是比较字符串。询问R字符串“useR”和“user”是否相等
+  CorrectAnswer: "'useR'=='user'"
+  AnswerTests: omnitest(correctExpr='"useR"=="user"', correctVal=FALSE)
+  Hint: 请输入"useR"=="user"
+
+- Class: cmd_question
+  Output: 检查-6 * 14是否不等于17 - 101。 
+  CorrectAnswer: -6 * 14!=17 - 101
+  AnswerTests: omnitest(correctExpr='-6 * 14!=17 - 101', correctVal=FALSE)
+  Hint: 使用比较运算符'!='
+  
+- Class: cmd_question
+  Output: 最后，找出将逻辑与数字进行比较会发生什么：TRUE和1是否相等？
+  CorrectAnswer: TRUE == 1
+  AnswerTests: omnitest(correctExpr='TRUE == 1', correctVal=TRUE)
+  Hint: TRUE == 1
+
+- Class: text
+  Output: 除了判断是否相等的'=='和'!='，还有小于和大于运算符：<和>。 您也可以分别添加一个等号来表示小于或等于或大于或等于：<=和>=。 
+    看看下面的R表达式，全部评估为FALSE：(1 + 2) > 4 "dog" < "Cats" TRUE <= FALSE。请记住，对于字符串比较，R基于字母顺序确定大于关系。
+    另外，请记住，TRUE对应于R中的1，而FALSE强制为0。 因此，FALSE <TRUE为TRUE。
+
+- Class: cmd_question
+  Output: 判断-6 * 5 + 2 是否大于或者等于 -10 + 1。
+    
+    TRUE is greater than FALSE.
+  CorrectAnswer: -6 * 5 + 2 >= -10 + 1
+  AnswerTests: omnitest(correctExpr='-6 * 5 + 2 >= -10 + 1', correctVal=FALSE)
+  Hint: 使用'>='
+
+- Class: cmd_question
+  Output: 判断"raining" 是否小于或者等于 "raining dogs"。
+  CorrectAnswer: "'raining' <= 'raining dogs'"
+  AnswerTests: omnitest(correctExpr='"raining" <= "raining dogs"')
+  Hint: 请输入"raining" <= "raining dogs"
+
+- Class: cmd_question
+  Output: TRUE 是否大于 FALSE.
+  CorrectAnswer: TRUE > FALSE
+  AnswerTests: omnitest(correctExpr='TRUE > FALSE', correctVal=TRUE)
+  Hint: TRUE > FALSE
+  
+- Class: text
+  Output: 关于R中向量的比较。 R的关系运算符不需要改变任何关于语法的东西，也可以用于向量。
+
+- Class: cmd_question
+  Output: 我们已经为你们预定义了向量vect1和vect2。请使用'>='比较运算符比较两个向量的关系。
+  CorrectAnswer: vect1 >= vect2
+  AnswerTests: omnitest(correctExpr='vect1 >= vect2')
+  Hint: hint
+  
+- Class: cmd_question
+  Output: 将我们之前使用的向量vect1和vect2组合成一个矩阵，使用mat<-matrix(c(vect1,vect2),nrow=2,byrow=TRUE)。这个表达中的'nrow'表示组合成的
+    矩阵有两行，元素按行放置。
+  CorrectAnswer: mat <- matrix(c(vect1,vect2),nrow=2,byrow=TRUE)
+  AnswerTests: omnitest(correctExpr=' mat <- matrix(c(vect1,vect2),nrow=2,byrow=TRUE)')
+  Hint: 表达式为：mat<-matrix(c(vect1,vect2),nrow=2,byrow=TRUE)。
+  
+- Class: cmd_question
+  Output: 打印我们刚才创建的向量mat，查看其内容和结构。
+  CorrectAnswer: mat
+  AnswerTests: omnitest(correctExpr='mat')
+  Hint: mat
+
+- Class: text
+  Output: R处理不同数据结构进行比较的能力并不止于向量。 矩阵和关系运算符也可以无缝协作！
+
+- Class: cmd_question
+  Output: 使用迄今为止学到的关系运算符，去看矩阵中的那些值小于等于14
+  CorrectAnswer: mat<=14
+  AnswerTests: omnitest(correctExpr='mat<=14')
+  Hint: mat<=14
+  
+- Class: text
+  Output: 注意：3 <x <7检查x是否在3和7之间不起作用; 你需要3 <x＆x <7。这里用到了运算符'&'，表示逻辑"与"运算
+  
+- Class: cmd_question
+  Output: 写R表达式来解决一个问题：判断之前用到过的向量vect1的最后一个元素是否大于10小于20
+  CorrectAnswer: vect1[1]>10 & vect1[1]<20
+  AnswerTests: omnitest(correctExpr='vect1[1]>10 & vect1[1]<20')
+  Hint: vect1[1]>10 & vect1[1]<20
+
+- Class: text
+  Output: ！ 运算符，否定逻辑值。 这里有一些使用！的表达式。 他们结果均为假：!TRUE，!(5 > 3) ，!!FALSE
+  
+- Class: mult_question  
+  Output: 判断下边这个表达式的结果：!(!(5 < 4) & !!!(7 > 12))
+  AnswerChoices: TRUE;FALSE
+  CorrectAnswer: FALSE
+  AnswerTests: omnitest(correctVal= 'FALSE')
+  Hint: 按照运算顺序执行预算
+  
+- Class: text
+  Output: if语句基本的语法：
+    if（condition）{
+      EXPR
+      }
+      
+- Class: cmd_question  
+  Output: 根据条件写一个if语句：如果vect1的长度大于5就输出'greater'。
+  CorrectAnswer: if(length(vect1)>5) print("great")
+  AnswerTests: omnitest(correctExpr= 'if(length(vect1)>5) print("great")')
+  Hint: if(length(vect1)>5) print("great")
+
+- Class: text
+  Output: 可以将else语句与if语句组合使用。 else语句不需要条件; 如果控制结构中的所有前面的条件都是FALSE，则简单地运行else相应的代码。
+    基本的结构为：
+    if (condition) {
+       expr1
+     } else {
+       expr2
+     }
+    
+    else关键字与if部分的右括号在同一行上。
+    
+- Class: cmd_question  
+  Output: 根据条件写一个if语句：如果vect2的长度大于10就输出'greater'，如果小于10，就输出'less
+  CorrectAnswer: if(length(vect2)>10) {print("great")} else {print("less")}
+  AnswerTests: omnitest(correctExpr= 'if(length(vect2)>10) {print("great")} else {print("less")}')
+  Hint: if(length(vect2)>10) {print("great")} else {print("less")}
+  
+- Class: text
+  Output: switch语句根据一个表达式的值选择语句执行。语法为：switch(expr,...)。其中的...表示与expr的各种可能输出值绑定的语句。下面用switch语句完善
+    函数代码。函数grade是一个成绩预测函数，根据输入的成绩等级输出分数范围。请看函数体上方的注释部分的要求，完成代码。
+
+- Class: script
+  Output: 在一个函数中最后一个被执行的R表达式的结果将会作为函数的返回值。一定要保存你的脚本在输入submit（）之前。
+  AnswerTests: test_func1()
+  Hint: 根据注释完成代码
+  Script: grade_level.R
+
+- Class: cmd_question
+  Output: 现在你已经创建了第一个函数，让我们测试它！输入：grade_level("A")。如果你的函数起作用，应该
+    只是返回字符串：'90-100'
+  CorrectAnswer: grade_level('A')
+  AnswerTests: omnitest(correctExpr="grade_level('A')")
+  Hint: 通过输入：grade_level('A')来测试grade_level()
+  
+- Class: mult_question
+  Output: 确定将这次练习的结果提交吗?
+  CorrectAnswer: NULL
+  AnswerChoices: Yes;No
+  AnswerTests: post_on_demand()
+  Hint: ""

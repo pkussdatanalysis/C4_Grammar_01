@@ -1,0 +1,195 @@
+- Class: meta
+  Course: Grammar
+  Lesson: Condition-And-Loop
+  Author: mzl
+  Type: Standard
+  Organization: pkuss
+  Version: 1.0
+  
+- Class: text
+  Output: 这节课要介绍R 语言的循环。
+  
+- Class: text
+  Output: 循环是一种编程时使用很广泛的技巧，可以帮助我们用 简短的代码来重复执行某一段指令。
+  
+- Class: text
+  Output: 循环重复地执行一个或者一系列语句，直到某个条件不为真为止。R中的循环结构包括for 和 while结构。
+  
+- Class: text
+  Output: for结构。for循环重复地执行一个语句，直到某个变量的值不再包含在序列seq中为止。语法为：for(var in seq) statement
+
+- Class: cmd_question
+  Output: 写一个for循环语句打印十次"Hello"
+  CorrectAnswer: for(i in 1:10) print("Hello")
+  AnswerTests: omnitest(correctExpr='for(i in 1:10) print("Hello")')
+  Hint: 使用i in 1:10 作为循环条件
+  
+- Class: text
+  Output: while结构。while循环重复地执行一个语句，直到条件不为真为止。语法为：while(cond) statement,例如：
+    使用while写以一个循环,当i>10时，输出i的值while(i>10) {print(i);i <- i-1}
+  
+- Class: text
+  Output: 让我们用一个数学上的小应用来练习。假设我们要找 出一个数x ，使得f(x) = x^2的值最小。虽然我们知道问题的答案是x=0 ，但是这里我们应用数值的方法来逼近答案。
+- Class: cmd_question
+  Output: 将数值3赋值给x0
+  CorrectAnswer: x0 <- 3
+  AnswerTests: any_of_exprs("x0 <- 3", "x0 = 3")
+  Hint: x0 <- 3
+  
+- Class: cmd_question
+  Output: 输入`x0^2`，计算f(x0)的結果。
+  CorrectAnswer: x0^2
+  AnswerTests: omnitest("x0^2")
+  Hint: x0^2
+  
+- Class: cmd_question
+  Output: 接着，我们把'x0 - 0.2 * x0'存到变量x1
+  CorrectAnswer: x1 <- x0 - 0.2 * x0
+  AnswerTests: any_of_exprs("x1 <- x0 - 0.2 * x0", "x1 = x0 - 0.2 * x0")
+  Hint: x1 <- x0 - 0.2 * x0
+  
+- Class: cmd_question
+  Output: 请同学计算f(x1)的值。
+  CorrectAnswer: x1^2
+  AnswerTests: omnitest("x1^2")
+  Hint: x1^2
+  
+- Class: mult_question
+  Output: 请问，f(x0)和f(x1)，何者较小？
+  AnswerChoices: f(x0);f(x1)
+  CorrectAnswer: f(x1)
+  AnswerTests: omnitest(correctVal = "f(x1)")
+  
+- Class: text
+  Output: 事实，数学可以证明如果把`x1 - 0.2 * x1`存到`x2`、 `x2 - 0.2 * x2`存到`x3`... 以此类推，x1、x2、x3...
+    就会越来越靠近最终的答案，也就是0 。让我们使用循环来验证。
+    
+- Class: cmd_question
+  Output: 首先，假定我们要重复算99次。请同学先建立一个长度为100 的数值向量，并且把它存到变量'x'之中:x <- numeric(100)。
+  CorrectAnswer: x <- numeric(100)
+  AnswerTests: test_x(x)
+  Hint: x <- numeric(100)
+  
+- Class: cmd_question
+  Output: 请把3 存到`x` 的第一个元素
+  CorrectAnswer: x[1] <- 3
+  AnswerTests: any_of_exprs("x[1] <- 3", "x[1] = 3")
+  Hint: x[1] <- 3
+  
+- Class: cmd_question
+  Output: 请把'x[1] - 0.2 * x[1]`'存到x 的第二个元素
+  CorrectAnswer: x[2] <- x[1] - 0.2 * x[1]
+  AnswerTests: any_of_exprs("x[2] <- x[1] - 0.2 * x[1]", "x[2] = x[1] - 0.2 * x[1]")
+  Hint: x[2] <- x[1] - 0.2 * x[1]
+  
+- Class: text
+  Output: 同学们可能已经了解，类似‘x[1] - 0.2 * x[1]’的运算会 一直重复。差別只在于'x[1] - 0.2 * x[1]'中的'x[1]'需要做改变
+  
+- Class: cmd_question
+  Output: 其实'x[1]'在这里，可以看成是'x[1] - 0.2 * x[1]'的运算的输入位置，是x 的第一个元素 。理解了这一点以后，为了让R
+    可以在改变'x[1]' 的情形下重复'x[1] - 0.2 * x[1]'这样的运算， 我们可以利用一个变量'i' 来代表现在要运算的的位置。请同学把1 存入变量'i'。
+  CorrectAnswer: i <- 1
+  AnswerTests: any_of_exprs("i <- 1", "i = 1")
+  Hint: i <- 1
+  
+- Class: cmd_question
+  Output: 接着，我们可以把'x[2] <- x[1] - 0.2 * x[1]'这样的运算 用'i' 改写。请注意，这里'x[2]' 的意义，是'x[1]'
+    的「下一个位置」。
+  CorrectAnswer: x[i + 1] <- x[i] - 0.2 * x[i]
+  AnswerTests: any_of_exprs("x[i + 1] <- x[i] - 0.2 * x[i]", "x[i + 1] = x[i] - 0.2* x[i]")
+  Hint: x[i + 1] <- x[i] - 0.2 * x[i]
+  
+- Class: text
+  Output: 在完成上一个问题之后，我们只要让'i=1' 的时候跑一次运算、 'i=2' 再跑一次运算、一直重复这个动作到'i=99'。在R 里面，我们可 运用'for'
+    这个语法来完成这个目的。下一个指令，我们先让同学复制上一个R 的循环指令，再跟同学解释。
+    
+- Class: cmd_question
+  Output: 请同学输入：'for(i in 1:99) x[i + 1] <- x[i] - 0.2 * x[i]'
+  CorrectAnswer: for(i in 1:99) x[i + 1] <- x[i] - 0.2 * x[i]
+  AnswerTests: omnitest("for(i in 1:99) x[i + 1] <- x[i] - 0.2 * x[i]")
+  Hint: for(i in 1:99) x[i + 1] <- x[i] - 0.2 * x[i]
+  
+- Class: cmd_question
+  Output: 请同学输入'x' ，就可以看看计算结果了。x越后面的元素，就越靠近0 。
+  CorrectAnswer: x
+  AnswerTests: omnitest("x")
+  Hint: x
+  
+- Class: mult_question
+  Output: 请问，'1:99'的长度是多少？
+  AnswerChoices: 2;99
+  CorrectAnswer: '99'
+  AnswerTests: omnitest(correctVal = "99")
+  
+- Class: text
+  Output: 在R 中，'for(i in 1:99) expr'的语法代表的，就是让'i'是'1:99'的第一个元素，也就是`i=1` 的状况下去运算'expr'。接着，让'i'为`1:99`的第二个元素，
+    也就是`i=2`的状况下下去运算'expr'。 重重复这个动作，直到'i'到'1:99'的最后一个元素，也就是'i=99'的状况。提醒同学，
+    这的expr就是'x[i + 1] <- x[i] - 0.2 * x[i]'。
+- Class: text
+  Output: 其实大部分机器学习算法的核心，是非常类似我們上述所做的动作： 「不停的改善既有的答案」。一开始我们先猜 3，然后我们得出一个可以改善答案的方法（`x[i
+    + 1] <- x[i] - 0.2 * x[i]`），最后得到一个「够用」 的答案。
+- Class: text
+  Output: 除了上述的范例之外，'for'循环也常常用于处理各种资料的工作。举例来说，如果我知道所有要读文件的名称，依序是："data/1.csv"、
+    "data/2.csv"和、"data/3.csv"，那我们要如何用'for'循环读取所有的文件呢？
+- Class: cmd_question
+  Output: 这类的应用，需要懂一点用R 产生字符串的函数，才能做出来。 请输入：'paste0("data/", 1, ".csv")'
+  CorrectAnswer: paste0("data/", 1, ".csv")
+  AnswerTests: omnitest('paste0("data/", 1, ".csv")')
+  Hint: paste0("data/", 1, ".csv")
+  
+- Class: text
+  Output: 这里的`paste0`函数可以把输入的R所有 字符串粘接成一个字符串。另一个非常相似的函数是：'paste'。两者最主要的差异，
+    在于'paste0'是直接连接，而'paste' 在连接时预设会插入空格。
+- Class: text
+  Output: 另一个问题，是循环时，要如何储存每一次执行'expr'后得到的结果。 当输出结果是数字时，我们可以像上述的范例，先建立一个向量来储存。更一般
+    的状况中，可以建立一个'list'来存储結果。提醒同学，'list'可以储存任何的 R对象。
+- Class: mult_question
+  Output: 假设我们先建立一个'list()'并取名为'retval'，接着我们想 用'for(i in <??>) retval[[i]] <- read.table(paste0("data/",
+    i, ".csv"))'来一口气读取"data/1.csv"、"data/2.csv"、"data/3.csv"。请问同学， <??>应该要填入什么呢？
+  AnswerChoices: c(1,2,3);c(2,3,4);c(3,4,5)
+  CorrectAnswer: c(1,2,3)
+  AnswerTests: omnitest(correctVal = c("c(1,2,3)"))
+  
+- Class: text
+  Output: 上述的两个例子，大致上呈现R 的循环功能，以及在使用上所需要搭配的一些细节。
+- Class: text
+  Output: 接着，再让我们回到第一个范例。在实务上，我们不可能无穷无尽的让改善答案的过程一直做下去。当答案「够用」的时候，我们就想停止这个过程。 除了用预先规定跑99
+    次的方式之外，另外一种常用的方式，是衡量每次改善的幅 度，并且当改善幅度太小的時候，中断执行的程序。
+- Class: cmd_question
+  Output: 通常，我们会拿这次的答案和上一次的答案做比较，如果差异过小，就代表能改善的幅度已经太小，答案可能已经夠用了。在这里，我们利用'abs(x[2]
+    - x[1])'可以计算第一次计算后答案的差异。这里的'abs'是取绝对值的运算。'abs'可以保证回传的都是正数，在比大小时很常用。 同理，请同学计算第二次计算后的答案的差异。
+  CorrectAnswer: abs(x[3] - x[2])
+  AnswerTests: omnitest(correctVal = abs(x[3] - x[2]))
+  Hint: abs(x[3] - x[2])
+  
+- Class: text
+  Output: 一个实务上常常采用的策略是：我们希望在答案差异小于0.01的时候，终止循环运算，否则就会一直计算。同时，我们希望循环最多跑99次。
+- Class: text
+  Output: 要达到这样的功能，我们需要先解决：「在改善幅度小于0.01的时候， 终止循环运算，否则就会一直计算」的实现。在R 之中，我们可以利用'if (expr1) expr2`来进行条件判断。
+    这样，R 只有 在'expr1'为'TRUE'的时候，才会执行expr2。否则就会略过。
+- Class: text
+  Output: 在R 的'break'函数则可以中断循环。
+- Class: script
+  Output: 回到原本的问题，我们可能会写出这样的代码。请同学在R 打开编辑器之后，阅读代码，再回到swirl中 输入`submit()`
+  Script: for-example1.R
+  AnswerTests: for_example1()
+- Class: cmd_question
+  Output: 请同学打印'x'的值
+  CorrectAnswer: x
+  AnswerTests: omnitest("x")
+  Hint: x
+- Class: mult_question
+  Output: 请问同学，这个计算在执行多少次就停止了？
+  AnswerChoices: 20;40;60;80;99
+  CorrectAnswer: 20
+  AnswerTests: omnitest(correctVal = "20")
+- Class: text
+  Output: 这份课程利用两个常见的范例来跟同学介绍R 中的`for` 和`if`两个功能。适当的使用这两个功能，我们可以让R 来完 成许多复杂的任务。
+  
+- Class: mult_question
+  Output: 确定将这次练习的结果提交吗?
+  CorrectAnswer: NULL
+  AnswerChoices: Yes;No
+  AnswerTests: post_on_demand()
+  Hint: ""  
+

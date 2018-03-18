@@ -1,0 +1,256 @@
+- Class: meta
+  Course: Grammar
+  Lesson: Functions
+  Author: mzl
+  Type: Standard
+  Organization: pkuss
+  Version: 2.4.3
+
+- Class: text
+  Output: 函数是R语言的基本组成部分之一。它们是可重用代码块，可以像任何其他R对象一样被看待。
+
+- Class: text
+  Output: 其实已经使用了一些函数。函数通常以名字后跟括号的形式被使用
+
+- Class: cmd_question
+  Output: 让我们尝试使用一些基本的函数。Sys.Date（）函数返回一个代表今天日期的字符串。在下面输入Sys.Date（）看看会发生什么。
+  CorrectAnswer: Sys.Date()
+  AnswerTests: omnitest(correctExpr='Sys.Date()')
+  Hint: 通过输入：Sys.Date（）显示今天的日期
+
+- Class: text
+  Output: R中的大部分函数都返回一个值，像Sys.Date（）这样的函数返回一个基于你的计算机环境的值，而其他函数通常计算输入数据并返回结果
+
+- Class: cmd_question
+  Output: mean（）函数将一个数字向量作为输入，并返回输入向量中所有数值的平均值。函数的输入通常被称为参数。为函数提供参数有时被称为传递参数到该函数。
+    你想要传递给函数的参数通常放在函数的括号内。尝试传递参数c（2，4，5）到mean()函数."
+  CorrectAnswer: mean(c(2, 4, 5))
+  AnswerTests: omnitest(correctExpr='mean(c(2, 4, 5))')
+  Hint: 通过输入：mean（c（2,4,5））来计算2,4和5的平均值
+
+- Class: text
+  Output: 函数通常需要参数，这些参数是函数操作的变量。例如，mean()函数将向量作为参数，就像mean(c(2,6,8))的情况一样。mean()函数然后将向量中的所有数字相加，
+    并将其和除以向量的长度。
+
+- Class: text
+  Output: 在下面的问题中，当你进入一个新的问题时会出现一个脚本文件，你将被要求修改一个脚本。当你完成修改完脚本，
+    保存对脚本的更改并键入submit(),脚本将会被执行。在脚本中会有一些注解，一定要读它们！
+
+- Class: script
+  Output: 在一个函数中最后一个被执行的R表达式的结果将会作为函数的返回值。我们希望构造一个函数，函数有一个参数x，并返回x而不修改它。、
+    删除'#'，以便返回x而不做任何修改。一定要保存你的脚本在输入submit（）之前。
+  AnswerTests: test_func1()
+  Hint: 确保删除'#'，这样函数中的最后一个表达式就是x。
+  Script: boring_function.R
+
+- Class: cmd_question
+  Output: 现在你已经创建了第一个函数，让我们测试它！输入：boring_function('My first function!')。如果你的函数起作用，应该
+    只是返回字符串：'My first function!'
+  CorrectAnswer: "boring_function('My first function!')"
+  AnswerTests: omnitest(correctExpr="boring_function('My first function!')")
+  Hint: 通过输入：boring_function（'My first function！'）来测试boring_function()
+
+- Class: text
+  Output: 恭喜您编写了第一个函数，通过编写函数，您可以深入了解R的工作原理。正如"R之父"约翰·钱伯斯，曾经说过：要理解R中的计算，记住两句话：
+    1R中一切皆对象。 2.发生的一切都是一个函数调用。
+
+- Class: cmd_question
+  Output: 如果你想看到任何函数的源代码，只需输入函数名称没有任何参数或括号。我们来试试这个你刚刚创建的函数。输入：boring_function
+    查看其源代码
+  CorrectAnswer: boring_function
+  AnswerTests: omnitest(correctExpr='boring_function')
+  Hint: 要查看boring_function的源代码，只需输入：boring_function
+
+- Class: text
+  Output: 让我们写一个一个更有用的函数！通过创建一个名为my_mean（）的函数来实现mean（）函数的功能。要计算一个向量中所有数字的平均值
+    先计算向量中所有数值的和，然后用这个和除以向量中的数值个数
+    
+- Class: script
+  Output: 确保在submit（）之前保存脚本。
+  AnswerTests: test_func2()
+  Hint: 使用sum()函数来查找向量中所有数字的和length（）函数来获得向量的大小。
+  Script: my_mean.R
+
+- Class: cmd_question
+  Output: 现在通过使用向量c（4,5,10）来测试你的my_mean（）函数
+  CorrectAnswer: my_mean(c(4, 5, 10))
+  AnswerTests: omnitest(correctExpr='my_mean(c(4, 5, 10))')
+  Hint: 运行命令my_mean(c(4,5,10))来测试你的新函数
+
+- Class: text
+  Output: 接下来，让我们尝试使用默认参数编写一个函数，您可以设置函数参数的默认值。
+    大多数时候使用你的函数的人会设置某个参数为一个相同的值，这会很有用。
+
+- Class: script
+  Output: 确保在输入submit（）之前保存脚本。
+  AnswerTests: test_func3()
+  Hint: 请记住设置适当的默认值！
+  Script: remainder.R
+
+- Class: cmd_question
+  Output: 我们来做剩余函数的一些测试。运行remainder(5)看看会发生什么。
+  CorrectAnswer: remainder(5)
+  AnswerTests: omnitest(correctExpr='remainder(5)')
+  Hint: 让我们通过运行测试余数函数：remainder(5)
+
+- Class: text
+  Output: 让我们花点时间来分析刚发生的事情，你为这个函数提供了一个参数，'num'是第一个参数，R把你提供的参数和'num'匹配起来。 参数'divisor'的默认值是2，
+    所以函数使用你给'divisor'提供的默认值。
+
+- Class: cmd_question
+  Output: 现在让我们通过提供两个参数来测试余数函数。输入remainder(11,5)，让我们看看会发生什么。
+  CorrectAnswer: remainder(11, 5)
+  AnswerTests: omnitest(correctExpr='remainder(11, 5)')
+  Hint: 让我们通过运行remainder(11, 5)测试你的余数函数
+
+- Class: text
+  Output: 再次，参数匹配得当
+
+- Class: cmd_question
+  Output: 你也可以在函数调用中通过名称明确指定参数值，参数的排序变得不重要。你可以通过输入以下内容来尝试：remainder(divisor = 11, num = 5)
+  CorrectAnswer: remainder(divisor = 11, num = 5)
+  AnswerTests: omnitest(correctExpr='remainder(divisor = 11, num = 5)')
+  Hint: 当指定参数名时，顺序不再重要！测试通过输入：remainder(divisor = 11, num = 5)
+
+- Class: text
+  Output: 你可以看到，remainder(11, 5)和remainder(divisor = 11, num = 5)有一个显着的差异
+
+- Class: cmd_question
+  Output: “R也可以部分匹配参数。尝试输入remainder(4, div = 2)看到这个函数的运行。
+  CorrectAnswer: remainder(4, div = 2)
+  AnswerTests: omnitest(correctExpr='remainder(4, div = 2)')
+  Hint: 通过输入来测试部分匹配：remaining（4，div = 2）
+
+- Class: text
+  Output: “一个警告：一般来说，你想让你的代码容易尽可能理解。通过指定参数的名字改变参数的顺序或只使用部分参数名称容易让人产生误解，所以谨慎使用这些功能！“
+
+- Class: cmd_question
+  Output: 所有这些谈论争论，你可能想知道是否有一种方法,你可以看到一个函数的参数（除了看文档）。幸运的是你可以使用args()函数！
+    type：args(remainder)来查看remainder函数的参数。
+  CorrectAnswer: args(remainder)
+  AnswerTests: omnitest(correctExpr='args(remainder)')
+  Hint: 通过输入args(remainder)来查看remainder()函数的参数：
+
+- Class: text
+  Output: 你可能没有意识到，但我正在引导你做一些事情非常有趣的事情。args()是一个函数，remainder()是一个函数。remainder()是args()的一个参数。
+    是的，这是真的：你可以传递函数作为参数！这是一个非常强大的概念。让我们写一个脚本来看看怎么运行的。
+
+- Class: script
+  Output: 确保在输入submit（）之前保存脚本。
+  AnswerTests: test_func4()
+  Hint: 确保当你传递一个函数作为参数时，只传入了函数的名字，没有括号！
+  Script: evaluate.R
+
+- Class: cmd_question
+  Output: 让我们使用evaluate()函数来改变函数的调用方式！使用evaluate()函数计算向量c（1.4,3.6,7.9,8.8）的标准差。
+  CorrectAnswer: evaluate(sd, c(1.4, 3.6, 7.9, 8.8))
+  AnswerTests: omnitest(correctExpr='evaluate(sd, c(1.4, 3.6, 7.9, 8.8))')
+  Hint: 标准偏差函数称为sd()，确认你传递一个函数作为你传递的参数时函数的名字后边没有括号！
+  
+- Class: text
+  Output: 将函数作为参数传递给其他函数的想法是重要和基本的编程概念
+
+- Class: text
+  Output: 你可能会惊讶地发现，你可以传递给函数一个预先没有被定义过函数作为参数。函数没有被命名通常被叫做“匿名函数”
+
+- Class: text
+  Output: 让我们使用evaluate()来看一下匿名函数如何工作。对于evaluate函数的第一个参数，我们将写一个小巧的功能，仅仅包含一行代码。在第二个参数中，
+    我们将通过将一些数据传递给第一个参数中的小匿名函数
+
+- Class: cmd_question
+  Output: 键入输入下边的命令然后我们将讨论匿名函数是如何工作的：evaluate(function(x){x+1}, 6)"
+  CorrectAnswer: evaluate(function(x){x+1}, 6)
+  AnswerTests: test_eval1()
+  Hint: 只需输入命令evaluate（function（x）{x + 1}，6）
+
+- Class: text
+  Output: 第一个参数是一个微小的匿名函数，只有一个参数'x'并返回'x + 1'。我们把数字6传递给了这个函数,最后表达式结果为7
+
+- Class: cmd_question
+  Output: 尝试使用evaluate()与匿名函数一起返回向量c（8,4,0）的第一个元素。你的匿名函数应该只有一个叫做'x'的变量作为参数
+  CorrectAnswer: evaluate(function(x){x[1]}, c(8, 4, 0))
+  AnswerTests: test_eval2()
+  Hint: 您可能需要回想一下如何索引向量元素，请记住您的匿名函数应该只有一个参数，并且该参数应该被命名为“x”"
+
+- Class: cmd_question
+  Output: 现在尝试使用用evaluate()以及一个匿名函数返回向量c（8,4,0）的最后一个元素。你的匿名函数应该只有一个叫做'x'的变量作为参数
+  CorrectAnswer: evaluate(function(x){x[length(x)]}, c(8, 4, 0))
+  AnswerTests: test_eval3()
+  Hint: 您可能需要回想一下如何索引向量元素，请记住您的匿名函数应该只有一个参数，并且该参数应该被命名为`x`。
+    在你的匿名函数中使用length（）函数可能帮你。
+- Class: cmd_question
+  Output: 对于课程的其余部分，我们将经常使用paste()函数。键入?paste，以便我们可以看看函数paste()文档“。
+  CorrectAnswer: ?paste
+  AnswerTests: omnitest(correctExpr='?paste')
+  Hint: 只需输入?paste
+
+- Class: text
+  Output: 你可以看到paste()的第一个参数是'...',可以作为省略号或简单的点。省略号允许要传递给函数的参数数量不确定。
+   paste()可以接受任意数量的字符串作为参数，paste()将返回所有的字符串合并为一个字符串的结果
+
+- Class: cmd_question
+  Output: 看看paste（）是如何工作的，输入paste（“Programming”，“is”，“fun！”）
+  CorrectAnswer: paste("Programming", "is", "fun!")
+  AnswerTests: omnitest(correctExpr='paste("Programming", "is", "fun!")')
+  Hint: 只要输入：paste（“Programming”，“is”，“fun！”）
+
+- Class: text
+  Output: 编写我们自己的修改版本的paste()
+
+- Class: script 
+  Output: 确保在键入submit（）之前保存脚本。
+  AnswerTests: test_func5()
+  Hint: 请记住，参数可以在...之后”
+  Script: telegram.R
+
+- Class: cmd_question
+  Output: 现在让我们测试你的 telegram()函数，用你的telegram()函数传递任何你想要的参数！
+  CorrectAnswer: telegram()
+  AnswerTests: expr_uses_func('telegram')
+  Hint: 使用telegram()函数，参数为你想传递的任何参数
+
+- Class: script
+  Output: 确保在键入submit（）之前保存脚本。
+  AnswerTests: test_func6()
+  Hint: 你的函数应该有三个部分：捕获参数列表中的省略号，从省略号中解压参数并赋值给变量，然后将这些变量传递给paste（）。
+    使用list函数将可变变量“...”转换成列表，然后根据名称获取对应的值
+  Script: mad_libs.R
+
+- Class: cmd_question
+  Output: 现在使用你的mad_libs函数，为了你的函数正常工作，可以按照顺序带上参数的名字分别为place,adjective,noun。
+  CorrectAnswer: mad_libs(adjective = "", place = "", noun = "")
+  AnswerTests: expr_uses_func('mad_libs')
+  Hint: 使用mad_libs函数，调用函数的时候可以带上参数的名字。
+
+- Class: text
+  Output: 我们即将结束这一课，但还有一个地方你应该知道。
+
+- Class: text
+  Output: “你熟悉R中的加、减、乘、除。为此，您可以使用+， - ，*和/符号。这些符号被称为二元运算符，因为它们需要两个输入：
+    一个来自输来自左边，一个输入来自右侧。 
+
+- Class: text
+  Output: 在R中你可以定义你自己的二元运算符，在下一个脚本中我会告诉你如何定义。
+
+- Class: script
+  Output: 确保在键入submit（）之前保存脚本。
+  AnswerTests: test_func7()
+  Hint: 记住：'Hello' %p% 'student!'，使用你自己的二元运算符。
+  Script: bin_op.R
+
+- Class: cmd_question
+  Output: 你做了你自己的二元运算符！让我们测试一下，将字符串粘贴在一起：'I', 'love', 'R!' 使用你的新的二元运算符
+  CorrectAnswer: "'I' %p% 'love' %p% 'R!'"
+  AnswerTests: omnitest(correctExpr="'I' %p% 'love' %p% 'R!'")
+  Hint: 在每个字符串之间使用％p％
+
+- Class: text
+  Output: 我们已经走到了课堂的最后，去写一些很棒的函数吧！
+  
+- Class: mult_question
+  Output: 确定将这次练习的结果提交吗?
+  CorrectAnswer: NULL
+  AnswerChoices: Yes;No
+  AnswerTests: post_on_demand()
+  Hint: ""  
+ 

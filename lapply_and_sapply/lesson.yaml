@@ -1,0 +1,257 @@
+- Class: meta
+  Course: Grammar
+  Lesson: lapply_and_sapply
+  Author: mzl
+  Type: Standard
+  Organization: pkuss
+  Version: 2.4.3
+
+- Class: text
+  Output: 在本课中，您将学习如何使用lapply（）和sapply（），R的两个最重要的成员是*apply函数系列，也称为循环函数。
+
+- Class: text
+  Output: 这些强大的函数以及它们相似的函数（vapply（）和tapply（）等）为实现数据分析的Split-Apply-Combine策略提供了一个简洁而方便的方法。
+
+- Class: text
+  Output: 每个*apply函数将一些数据分割(SPLIT up)小块，对每个块应用(APPLY)一个函数，然后组合(COMBINE)结果。关于这一策略的更详细的讨论可以在Hadley Wickham的“统计软件杂志”（Journal of Statistical Software）的论文“The Split-Apply-Combine Strategy for Data Analysis”中找到。
+
+- Class: text
+  Output: 在本课中，我们将使用来自UCI机器学习库的Flags数据集，这个数据集包含了不同国家和旗帜的细节，更多信息可以在这里找到：http://archive.ics.uci.edu/ml/datasets/Flags"
+
+- Class: text
+  Output: 让我们直接进入，以便了解这些特殊函数的工作方式！
+
+- Class: cmd_question
+  Output: 我已经将数据集存储在一个名为flags的变量中。输入head(flags)以预览数据集的前六行（即“头”）。
+  CorrectAnswer: head(flags)
+  AnswerTests: omnitest(correctExpr='head(flags)')
+  Hint: 输入head(flags)以查看数据集的“头”。
+
+- Class: cmd_question
+  Output: 您可能需要滚动以查看所有输出。现在，我们使用dim(flags)来检查数据集的维度。
+  CorrectAnswer: dim(flags)
+  AnswerTests: omnitest(correctExpr='dim(flags)')
+  Hint: 输入dim(flags)以查看数据集的维度。
+
+- Class: text
+  Output: 这告诉我们，有194行或者叫观测值，30列或者叫变量。每个观测值是一个国家，每个变量描述该国或其国旗的一些特点。
+    要在单独的文本文件中打开数据集的更完整描述，请在返回提示符（>）时键入viewinfo（）。
+
+- Class: cmd_question
+  Output: 查看数据集完整描述。使用viewinfo()。
+  CorrectAnswer: class(flags)
+  AnswerTests: omnitest(correctExpr='viewinfo()')
+  Hint: 输入viewinfo()查看数据集完整描述。
+  
+- Class: cmd_question
+  Output: 与任何数据集一样，我们想知道变量以什么格式存储。换句话说，每个变量的“class”是什么？如果我们输入class(flags)，会发生什么？
+    试试看。
+  CorrectAnswer: class(flags)
+  AnswerTests: omnitest(correctExpr='class(flags)')
+  Hint: 输入class(flags)看看会发生什么。
+
+- Class: text
+  Output: 这只是告诉我们，整个数据集被存储为'data.frame'，这不能回答我们的问题。我们真正需要的是在每个单独的列上调用class（）函数。
+    虽然我们可以手动执行此操作（即一次一列），但如果我们能够自动执行此过程，则速度会更快。听起来像一个循环！
+
+- Class: text
+  Output: lapply（）函数将一个列表作为输入，对列表中的每个元素应用一个函数，然后返回一个与原始列表长度相同的列表。
+    由于数据框实际上只是一个向量列表（可以使用as.list（flags）来查看），我们可以使用lapply()将class()函数应用于flags数据集的每一列。
+    让我们用实际行动来看一下！
+
+- Class: cmd_question
+  Output: 输入cls_list <- lapply(flags,class)将class函数应用于flags数据集的每一列，并将结果存储在名为cls_list的变量中。
+    请注意，您只需提供您要应用的函数的名称（即class），而不需要通常的括号。
+  CorrectAnswer: cls_list <- lapply(flags, class)
+  AnswerTests: omnitest(correctExpr='cls_list <- lapply(flags, class)')
+  Hint: 输入cls_list < - lapply(flags，class)将class()函数应用于数据集的每一列，并将结果存储在名为cls_list的变量中。
+  
+- Class: cmd_question
+  Output: 输入cls_list查看结果。
+  CorrectAnswer: cls_list
+  AnswerTests: omnitest(correctExpr='cls_list')
+  Hint: 输入cls_list查看结果
+
+- Class: cmd_question
+  Output: 显然，'lapply'中的'l'代表'list'。输入class（cls_list）来确认lapply()返回一个列表。
+  CorrectAnswer: class(cls_list)
+  AnswerTests: omnitest(correctExpr='class(cls_list)')
+  Hint: 输入class（cls_list）来确认lapply()返回一个列表。
+
+- Class: text
+  Output: 正如所料，我们得到了一个长度为30的列表 - 每个变量/列有一个元素。如果我们可以将它表示为一个向量，而不是一个列表，则输出将会更加紧凑。
+
+- Class: cmd_question
+  Output: 从上一课您可能还记得，列表对于存储多种类型数据非常有帮助。在这种情况下，由于lapply()返回的列表中的每个元素都是长度为1的字符向量（即“整数”和“向量”），所以可以将cls_list简化为字符向量。要手动执行此操作，请输入as.character（cls_list）。
+  CorrectAnswer: as.character(cls_list)
+  AnswerTests: omnitest(correctExpr='as.character(cls_list)')
+  Hint: 输入as.character（cls_list）将cls_list强制转换为字符向量。
+
+- Class: cmd_question
+  Output: sapply()的原理是通过调用lapply()并自动尝试simplify（因此'sapply'中的's'）结果给你。使用sapply（）与使用lapply（）获取标志数据集的每一列的class的方式相同，并将结果存储在cls_vect中。如果您需要帮助，请输入？sapply以调出文档。
+  CorrectAnswer: cls_vect <- sapply(flags, class)
+  AnswerTests: omnitest(correctExpr='cls_vect <- sapply(flags, class)')
+  Hint: 输入cls_vect < - sapply（flags，class）以将列class存储在名为cls_vect的字符向量中。
+
+- Class: cmd_question
+  Output: 使用class（cls_vect）来确认sapply（）将结果简化为一个字符向量。
+  CorrectAnswer: class(cls_vect)
+  AnswerTests: omnitest(correctExpr='class(cls_vect)')
+  Hint: 输入class（cls_vect）来确认sapply（）返回一个字符向量。
+
+- Class: text
+  Output: 通常，如果结果是每个元素长度为1的列表，则sapply（）返回一个向量。如果结果是每个元素都是相同长度（> 1）的向量的列表，sapply（）返回一个矩阵。如果sapply（）不能解决问题，那么它只是返回一个列表，与lapply（）给你的没什么不同。
+
+
+- Class: text
+  Output: 让我们多练习使用lapply()和sapply()！
+
+- Class: text
+  Output: 我们数据集的第11到17列是指示变量，每个代表不同的颜色。如果颜色出现在一个国家的标志中，则指示变量的值为1，否则为0。
+
+- Class: cmd_question
+  Output:  因此，如果我们想知道在我们的数据集中的国家总数，例如他们国旗上有橙色的国家，我们可以在“橙色”列中加上所有的1和0。尝试sum(flags$orange)看到这一点。
+  CorrectAnswer: sum(flags$orange)
+  AnswerTests: omnitest(correctExpr='sum(flags$orange)')
+  Hint: 使用sum(flags$orange)将“橙色”列中的所有1和0相加。
+
+- Class: text
+  Output: 现在我们要对记录在数据集中的每种颜色重复这个操作。
+
+- Class: cmd_question
+  Output: 首先，使用flag_colors <- flags [，11:17]来提取包含颜色数据的列，并将其存储在名为flag_colors的新数据框中。 （注意11:17之前的逗号这个子集命令告诉R我们需要所有的行，但只有11到17列）
+  CorrectAnswer: flag_colors <- flags[, 11:17]
+  AnswerTests: omnitest(correctExpr='flag_colors <- flags[, 11:17]')
+  Hint: flag_colors <- flags [，11:17]将完成工作！
+
+- Class: cmd_question
+  Output: 使用head()函数查看flag_colors的前6行。
+  CorrectAnswer: head(flag_colors)
+  AnswerTests: omnitest(correctExpr='head(flag_colors)')
+  Hint: 使用head(flag_colors)查看flag_colors的前六行。
+
+- Class: cmd_question
+  Output: 要获取包含flag_colors每列总和的列表，请使用两个参数调用lapply（）函数。第一个参数是我们循环的对象（即flag_colors），第二个参数是我们希望应用到每列（即sum）的函数的名称。请记住，第二个参数只是没有括号的函数的名字等
+  CorrectAnswer: lapply(flag_colors, sum)
+  AnswerTests: omnitest(correctExpr='lapply(flag_colors, sum)')
+  Hint: 使用lapply（flag_colors，sum）返回每列的总和。
+
+- Class: text
+  Output: 这告诉我们在我们的数据集中的194个标志中，153个包含红色，91个包含绿色，99个包含蓝色，依此类推。
+
+- Class: cmd_question
+  Output: 结果是一个列表，因为lapply（）总是返回一个列表。这个列表中的每个元素的长度都是1，因此可以通过调用sapply（）而不是lapply（）来将结果简化为一个向量。现在就试试。
+  CorrectAnswer: sapply(flag_colors, sum)
+  AnswerTests: omnitest(correctExpr='sapply(flag_colors, sum)')
+  Hint: 使用sapply（flag_colors，sum）返回列总和向量
+
+- Class: text
+  Output: 来找到包含每种颜色的标志比例（194），也许是信息跟那个丰富的。由于每列只是一堆1和0，每列的算术平均值会给我们1的比例。 （如果不清楚为什么，考虑一个简单的情况，你有三个1和两个0 - （1 + 1 + 1 + 0 + 0）/ 5 = 3/5 = 0.6）。
+
+- Class: cmd_question
+  Output: 使用sapply（）将mean（）函数应用于flag_colors的每一列。请记住，sapply（）的第二个参数应该指定要应用的函数的名称（即mean）。
+  CorrectAnswer: sapply(flag_colors, mean)
+  AnswerTests: omnitest(correctExpr='sapply(flag_colors, mean)')
+  Hint: 输入sapply（flag_colors,mean）
+
+- Class: text
+  Output: 在我们到目前为止看过的例子中，sapply（）已经能够将结果简化为向量。这是因为lapply（）返回的列表中的每个元素都是长度为1的向量。回想一下，当lapply（）返回的列表中的每个元素是一个长度相同（> 1）的向量时，sapply（）会返回一个矩阵。
+
+- Class: cmd_question
+  Output: 为了说明这一点，我们从标志数据集中提取第19到第23列，并将结果存储在一个名为flag_shapes的新数据框中。 flag_shapes <- 标志[，19:23]将做到这一点。
+  CorrectAnswer: flag_shapes <- flags[, 19:23]
+  AnswerTests: omnitest(correctExpr='flag_shapes <- flags[, 19:23]')
+  Hint: 将第19到第23列保存在一个新变量中：flag_shapes < - flags [，19:23]
+
+- Class: text
+  Output: 这些列（即变量）中的每一列表示特定形状或设计出现在国旗上的次数。我们感兴趣的是每个形状或设计出现的最小和最大次数。
+
+- Class: cmd_question
+  Output: range()函数返回其第一个参数的最小值和最大值，它应该是一个数字向量。使用lapply（）将range()函数应用于flag_shapes的每一列。不要担心将结果存储在新变量中。现在，我们知道lapply（）总是返回一个列表。
+  CorrectAnswer: lapply(flag_shapes, range)
+  AnswerTests: omnitest(correctExpr='lapply(flag_shapes, range)')
+  Hint: 尝试lapply（flag_shapes，range）将range（）函数应用于flag_shapes的每一列。
+
+- Class: cmd_question
+  Output: 执行相同的操作，但使用sapply()并将结果存储在名为shape_mat的变量中。
+  CorrectAnswer: shape_mat <- sapply(flag_shapes, range)
+  AnswerTests: omnitest(correctExpr='shape_mat <- sapply(flag_shapes, range)')
+  Hint: 将range（）函数应用到flag_shapes的每一列：shape_mat <- sapply（flag_shapes，range），结果存储在shape_mat中。
+  
+- Class: cmd_question
+  Output: 查看shape_mat的内容。
+  CorrectAnswer: shape_mat
+  AnswerTests: any_of_exprs('shape_mat', 'print(shape_mat)')
+  Hint: 输入shape_mat查看其内容。
+
+- Class: text
+  Output: shape_mat的每一列给出其各自的形状出现在不同标志中的最小（第1行）和最大（第2行）次数。
+
+- Class: cmd_question
+  Output: 使用class（）函数确认shape_mat是一个矩阵。
+  CorrectAnswer: class(shape_mat)
+  AnswerTests: omnitest(correctExpr='class(shape_mat)')
+  Hint: class（shape_mat）返回shape_mat的class。
+
+- Class: text
+  Output: 正如我们所看到的，sapply()总是试图简化lapply()给出的结果。我们迄今为止所看到的每个例子都取得了成功。让我们来看一个例子，其中sapply（）无法弄清楚如何简化结果，从而返回一个列表，与lapply（）没有区别。
+
+- Class: cmd_question
+  Output: 当给定一个向量时，unique()函数返回一个移除了所有重复元素的向量。换句话说，unique（）只返回唯一元素的向量。要查看它是如何工作的，请尝试unique（c（3,4,5,5,5,6,6））。
+  CorrectAnswer: unique(c(3, 4, 5, 5, 5, 6, 6))
+  AnswerTests: omnitest(correctExpr='unique(c(3, 4, 5, 5, 5, 6, 6))')
+  Hint: 使用unique(c（3,4,5,5,5,6,6)),来看看unique（）函数是如何工作的。
+
+- Class: cmd_question
+  Output: 我们想知道标志数据集中每个变量的唯一值。为了实现这一点，使用lapply（）将unique()函数应用于flags数据集中的每个列，并将结果存储在名为unique_vals的变量中。
+  CorrectAnswer: unique_vals <- lapply(flags, unique)
+  AnswerTests: omnitest(correctExpr='unique_vals <- lapply(flags, unique)')
+  Hint: 尝试unique_vals <- lapply(flags, unique)
+
+- Class: cmd_question
+  Output: 将unique_vals的值打印到控制台。
+  CorrectAnswer: unique_vals
+  AnswerTests: any_of_exprs('unique_vals', 'print(unique_vals)')
+  Hint: 输入unique_vals查看其内容。
+  
+- Class: cmd_question
+  Output: 由于unique_vals是一个列表，所以你可以使用你所学的知识来确定unique_vals的每个元素的长度（即每个变量的唯一值的数量），如果可能，简化结果。提示：length()函数到unique_vals的每个元素
+  CorrectAnswer: sapply(unique_vals, length)
+  AnswerTests: omnitest(correctExpr='sapply(unique_vals, length)')
+  Hint: 使用sapply()将length()函数应用于unique_vals列表的每个元素。请记住，您正在使用的函数的名称后面没有括号（即长度）。
+
+- Class: text
+  Output: 因为unique_vals列表的元素都是不同长度的向量的事实，去应用sapply()是一个问题，因为没有明显的方法来简化结果。
+
+- Class: cmd_question
+  Output: 使用sapply()将unique()函数应用于flags数据集的每一列，以查看从lapply（）得到的相同的非简化列表。
+  CorrectAnswer: sapply(flags, unique)
+  AnswerTests: omnitest(correctExpr='sapply(flags, unique)')
+  Hint: 使用sapply(flags, unique)将unique函数应用于每一列标志，不能简化结果。
+
+- Class: text
+  Output: 有时，您可能需要应用尚未定义的函数，因此需要您自己编写。在R中编写函数已经超出了本课程的范围，但是让我们来看一个在循环函数的情况下如何做的简单例子。
+
+- Class: text
+  Output: 假装你只对来自你刚刚创建的unique_vals列表的每个元素的第二项感兴趣。由于unique_vals列表中的每个元素都是一个向量，我们不知道R中的任何内置函数返回向量的第二个元素，所以我们将构造自己的函数。
+
+- Class: cmd_question
+  Output: lapply(unique_vals，function(elem)elem [2])将返回包含unique_vals列表中每个元素的第二项的列表。请注意，我们的函数需要一个参数elem，这个参数只是一个“虚拟变量”，它依次取值为unique_vals的每个元素的值。
+  CorrectAnswer: lapply(unique_vals, function(elem) elem[2])
+  AnswerTests: calculates_same_value('lapply(unique_vals, function(elem) elem[2])')
+  Hint: 使用lapply（unique_vals，function（elem）elem [2]）从unique_vals列表的每个元素返回包含第二项的列表。
+
+
+- Class: text
+  Output: 前面的例子和这个例子唯一的区别是我们在lapply（）的调用中定义和使用我们自己的函数。我们的函数没有名字，只要lapply（）使用完它就会消失。所谓的“匿名函数”当R的内置函数中没有课选择的时可能非常有用。
+
+- Class: text
+  Output: 在本课中，您学习了如何使用强大的lapply()和sapply()函数对列表元素进行操作。在下一课中，我们将看看lapply()和sapply()的一些近亲。
+  
+- Class: mult_question
+  Output: 确定将这次练习的结果提交吗?
+  CorrectAnswer: NULL
+  AnswerChoices: Yes;No
+  AnswerTests: post_on_demand()
+  Hint: ""  
+  
