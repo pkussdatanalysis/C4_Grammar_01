@@ -96,10 +96,10 @@
   Hint: mat<=14
   
 - Class: text
-  Output: 注意：3 <x <7检查x是否在3和7之间不起作用; 你需要3 <x＆x <7。这里用到了运算符'&'，表示逻辑"与"运算
+  Output: 注意：3 <x <7检查x是否在3和7之间不起作用; 你需要3 <x &x <7。这里用到了运算符'&'，表示逻辑"与"运算
   
 - Class: cmd_question
-  Output: 写R表达式来解决一个问题：判断之前用到过的向量vect1的最后一个元素是否大于10小于20
+  Output: 写R表达式来解决一个问题：判断之前用到过的向量vect1的第一个元素是否大于10小于20
   CorrectAnswer: vect1[1]>10 & vect1[1]<20
   AnswerTests: omnitest(correctExpr='vect1[1]>10 & vect1[1]<20')
   Hint: vect1[1]>10 & vect1[1]<20
@@ -122,9 +122,9 @@
       
 - Class: cmd_question  
   Output: 根据条件写一个if语句：如果vect1的长度大于5就输出'greater'。
-  CorrectAnswer: if(length(vect1)>5) print("great")
-  AnswerTests: omnitest(correctExpr= 'if(length(vect1)>5) print("great")')
-  Hint: if(length(vect1)>5) print("great")
+  CorrectAnswer: if(length(vect1)>5) print("greater")
+  AnswerTests: omnitest(correctExpr= 'if(length(vect1)>5) print("greater")')
+  Hint: if(length(vect1)>5) print("greater")
 
 - Class: text
   Output: 可以将else语句与if语句组合使用。 else语句不需要条件; 如果控制结构中的所有前面的条件都是FALSE，则简单地运行else相应的代码。
@@ -139,9 +139,9 @@
     
 - Class: cmd_question  
   Output: 根据条件写一个if语句：如果vect2的长度大于10就输出'greater'，如果小于10，就输出'less
-  CorrectAnswer: if(length(vect2)>10) {print("great")} else {print("less")}
-  AnswerTests: omnitest(correctExpr= 'if(length(vect2)>10) {print("great")} else {print("less")}')
-  Hint: if(length(vect2)>10) {print("great")} else {print("less")}
+  CorrectAnswer: if(length(vect2)>10) {print("greater")} else {print("less")}
+  AnswerTests: omnitest(correctExpr= 'if(length(vect2)>10) {print("greater")} else {print("less")}')
+  Hint: if(length(vect2)>10) {print("greater")} else {print("less")}
   
 - Class: text
   Output: switch语句根据一个表达式的值选择语句执行。语法为：switch(expr,...)。其中的...表示与expr的各种可能输出值绑定的语句。下面用switch语句完善
